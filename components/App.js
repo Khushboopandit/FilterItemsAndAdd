@@ -10,29 +10,44 @@ import React from 'react';
 import {
   SafeAreaView,
   ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
   View,
 } from 'react-native';
 
-import PageInputFieldWithAddButton from './PageInputFieldWithAddButton'
+import PageInputFieldWithAddButton from './PageInputFieldWithAddButton';
+import PageItems from './PageItems';
 import Styles from './AppStyle'
 
 export default class App extends React.Component {
-  render(){
+  constructor(props) {
+    super(props);
+    this.state={
+      data:['Milk','Coffee','Oranges','Bread'],
+      filterData:[],
+      inputValue:''
+    };
+  }
 
+  //update Input value
+  handleOnChange=(inputValue)=>{
+    this.setState({inputValue})
+  }
+
+  // Adding new item to list
+  addItemToData=()=>{
+    let data = this.state.data
+    data.push(this.state.inputValue)
+    this.setState({data,inputValue:''})
+  }
+  render(){
   return (
     <SafeAreaView>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         >
           <View style={Styles.body}>
-            <PageInputFieldWithAddButton/>
-          <Text>
-            Read the docs to discover what to do next:
-          </Text>
+            {/* rendering child components and passing props to it */}
+            <PageInputFieldWithAddButton inputValue={this.state.inputValue} handleOnChange={this.handleOnChange} addItem={this.addItemToData}/>
+            <PageItems data={this.state.data} filterData={this.state.filterData} inputValue={this.state.inputValue}/>
           </View>
       </ScrollView>
     </SafeAreaView>

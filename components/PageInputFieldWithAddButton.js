@@ -8,40 +8,36 @@
 
 import React from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
   Text,
-  useColorScheme,
+  TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-import Styles from './AppStyle'
+import Styles from './AppStyle';
 
 export default class PageInputFieldWithAddButton extends React.Component {
-  render(){
 
-  return (
-    
-          <View style={Styles.body}>
-            
-          <Text>
-            Read the docs to discover what to do next:
-          </Text>
-          </View>
-      
-  );
-    }
-};
-
-
-
+  
+  renderButton() {
+    return (
+      <TouchableOpacity style={Styles.button} onPress={this.props.addItem}>
+        <Text style={Styles.buttonText}>+</Text>
+      </TouchableOpacity>
+    );
+  }
+  render() {
+    return (
+      <View style={Styles.inputAndButtonView}>
+        <TextInput
+          style={Styles.input}
+          value={this.props.inputValue}
+          onChangeText={text => this.props.handleOnChange(text)}
+          onSubmitEditing={this.props.addItem}
+        />
+        {/* Button rendering */}
+        {this.renderButton()}
+      </View>
+    );
+  }
+}
